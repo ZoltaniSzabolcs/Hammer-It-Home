@@ -1,4 +1,4 @@
-package game;
+package game.rightHand;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -9,6 +9,8 @@ public class RightHandModel {
     private int width;
     private int height;
     private BufferedImage hitImg[];
+    private int currentImg;
+    private int timing[];
     public RightHandModel(int width, int height){
         this.width = width;
         this.height = height;
@@ -23,27 +25,42 @@ public class RightHandModel {
         }catch (IOException e){
             e.printStackTrace();
         }
+
+        int frameTime = 16700000;
+        this.timing = new int[hitImg.length];
+        timing[0] = frameTime;
+        timing[1] = frameTime * 9;
+        timing[2] = frameTime * 3;
+        timing[3] = frameTime * 2;
+        timing[4] = frameTime;
+        timing[5] = frameTime;
+        currentImg = hitImg.length;
     }
-    public BufferedImage getImg(int i){
-        if(i < 6){
-            return hitImg[i];
-        }
-        return null;
+    public BufferedImage[] getHitImg() {
+        return hitImg;
     }
 
     public int getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public int getSpriteNumber() {
+        return hitImg.length;
+    }
+
+    public int getCurrentImg() {
+        return currentImg;
+    }
+
+    public void setCurrentImg(int currentImg) {
+        this.currentImg = currentImg;
+    }
+
+    public int[] getTiming() {
+        return timing;
     }
 }

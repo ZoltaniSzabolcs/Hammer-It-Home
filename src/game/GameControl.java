@@ -1,19 +1,24 @@
 package game;
 
-import java.awt.*;
-import java.util.Random;
+import game.leftHand.LeftHandControl;
+import game.rightHand.RightHandControl;
 
 public class GameControl implements Runnable{
+    private LeftHandControl leftHandControl;
+    private RightHandControl rightHandControl;
     private GameModel gameModel;
     private GameView gameView;
     private Thread gameThread;
-    private Random random;
+    private KeyHandler keyHandler;
     private boolean movePlatform;
     private final int FPS = 60;
-    public GameControl(GameModel gameModel, GameView gameView){
+    public GameControl(GameModel gameModel, GameView gameView, LeftHandControl leftHandControl, RightHandControl rightHandControl, KeyHandler keyHandler){
         this.gameModel = gameModel;
         this.gameView = gameView;
-        this.random = new Random();
+        this.leftHandControl = leftHandControl;
+        this.rightHandControl = rightHandControl;
+
+        this.keyHandler = keyHandler;
         this.movePlatform = false;
     }
 
@@ -43,13 +48,14 @@ public class GameControl implements Runnable{
 
             }
             if(timer >= 1000000000){
-                System.out.println("FPS: " + drawCount);
+//                System.out.println("FPS: " + drawCount + " Time: " + System.nanoTime());
                 drawCount = 0;
                 timer = 0;
             }
         }
     }
     private void update(){
-
+        leftHandControl.run();
+        rightHandControl.run();
     }
 }

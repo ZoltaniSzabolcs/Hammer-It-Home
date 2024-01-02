@@ -1,4 +1,8 @@
 package game;
+
+import game.leftHand.LeftHandModel;
+import game.rightHand.RightHandModel;
+
 public class GameModel {
     private LeftHandModel leftHandModel;
     private RightHandModel rightHandModel;

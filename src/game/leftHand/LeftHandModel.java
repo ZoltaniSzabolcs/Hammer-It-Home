@@ -1,4 +1,4 @@
-package game;
+package game.leftHand;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -9,7 +9,10 @@ public class LeftHandModel {
     private int width;
     private int height;
     private BufferedImage hitImg[];
-    public LeftHandModel(int width, int height){
+    private int currentImg;
+    private int timing[];
+
+    public LeftHandModel(int width, int height) {
         this.width = width;
         this.height = height;
         hitImg = new BufferedImage[5];
@@ -19,30 +22,44 @@ public class LeftHandModel {
             hitImg[2] = ImageIO.read(new File("res/leftHand/put03.png"));
             hitImg[3] = ImageIO.read(new File("res/leftHand/put04.png"));
             hitImg[4] = ImageIO.read(new File("res/leftHand/put05.png"));
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        int frameTime = 16700000;
+        this.timing = new int[hitImg.length];
+        timing[0] = frameTime * 3;
+        timing[1] = frameTime * 7;
+        timing[2] = frameTime * 3;
+        timing[3] = frameTime * 3;
+        timing[4] = frameTime * 2;
+        currentImg = hitImg.length;
     }
-    public BufferedImage getImg(int i){
-        if(i < 5){
-            return hitImg[i];
-        }
-        return null;
+
+    public BufferedImage[] getHitImg() {
+        return hitImg;
     }
 
     public int getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public int getSpriteNumber() {
+        return hitImg.length;
+    }
+
+    public int getCurrentImg() {
+        return currentImg;
+    }
+
+    public void setCurrentImg(int currentImg) {
+        this.currentImg = currentImg;
+    }
+
+    public int[] getTiming() {
+        return timing;
     }
 }

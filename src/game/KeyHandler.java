@@ -5,29 +5,45 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
     private boolean leftHand, rightHand;
-    private GameControl gameControl;
-    public KeyHandler(GameControl gameControl){
-        this.gameControl = gameControl;
+
+    public KeyHandler() {
+        leftHand = false;
+        rightHand = false;
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if(code == KeyEvent.VK_A){
+        if (code == KeyEvent.VK_A) {
             leftHand = true;
 
         }
-        if(code == KeyEvent.VK_L){
+        if (code == KeyEvent.VK_L) {
             rightHand = true;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_A) {
+            leftHand = false;
+        }
+        if (code == KeyEvent.VK_L) {
+            rightHand = false;
+        }
+    }
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    public boolean isLeftHand() {
+        return leftHand;
+    }
+
+    public boolean isRightHand() {
+        return rightHand;
     }
 }
