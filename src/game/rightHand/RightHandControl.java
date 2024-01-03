@@ -1,6 +1,7 @@
 package game.rightHand;
 
 import game.KeyHandler;
+import game.SoundControl;
 
 
 public class RightHandControl {
@@ -8,10 +9,12 @@ public class RightHandControl {
     private RightHandView rightHandView;
     private KeyHandler keyHandler;
     private long startTime;
+    private SoundControl soundControl;
     public RightHandControl(RightHandModel rightHandModel, RightHandView rightHandView, KeyHandler keyHandler) {
         this.rightHandModel = rightHandModel;
         this.rightHandView = rightHandView;
         this.keyHandler = keyHandler;
+        this.soundControl = new SoundControl();
     }
 
     public void run() {
@@ -19,7 +22,7 @@ public class RightHandControl {
         if(rightHandModel.getCurrentImg() < rightHandModel.getSpriteNumber()){
             double delta = 0;
             long currentTime = System.nanoTime();
-            delta = Math.abs(startTime - currentTime);
+            delta = Math.abs(currentTime - startTime);
             if(delta > rightHandModel.getTiming()[rightHandModel.getCurrentImg()]){
                 rightHandModel.setCurrentImg(rightHandModel.getCurrentImg() + 1);
                 startTime = System.nanoTime();
@@ -30,9 +33,12 @@ public class RightHandControl {
             if(keyHandler.isRightHand()){
                 startTime = System.nanoTime();
                 rightHandModel.setCurrentImg(0);
-                run();
-                System.out.println("Right hand starting action");
+                soundControl.playRandomHitSound();
+//                System.out.println("Right hand starting action");
             }
         }
+    }
+    public boolean isHitting(){
+        return rightHandModel.getCurrentImg() == 0;
     }
 }

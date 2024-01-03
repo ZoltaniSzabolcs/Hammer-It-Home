@@ -1,6 +1,7 @@
 package game;
 
 import game.leftHand.LeftHandControl;
+import game.platformNails.PlatformNailsControl;
 import game.rightHand.RightHandControl;
 
 public class GameControl implements Runnable{
@@ -8,15 +9,17 @@ public class GameControl implements Runnable{
     private RightHandControl rightHandControl;
     private GameModel gameModel;
     private GameView gameView;
+    private PlatformNailsControl platformNailsControl;
     private Thread gameThread;
     private KeyHandler keyHandler;
     private boolean movePlatform;
     private final int FPS = 60;
-    public GameControl(GameModel gameModel, GameView gameView, LeftHandControl leftHandControl, RightHandControl rightHandControl, KeyHandler keyHandler){
+    public GameControl(GameModel gameModel, GameView gameView, LeftHandControl leftHandControl, RightHandControl rightHandControl, PlatformNailsControl platformNailsControl, KeyHandler keyHandler){
         this.gameModel = gameModel;
         this.gameView = gameView;
         this.leftHandControl = leftHandControl;
         this.rightHandControl = rightHandControl;
+        this.platformNailsControl = platformNailsControl;
 
         this.keyHandler = keyHandler;
         this.movePlatform = false;
@@ -34,6 +37,7 @@ public class GameControl implements Runnable{
         long currentTime;
         long timer = 0;
         int drawCount = 0;
+        long drawtime, drawStart, drawEnd;
         while(gameThread != null){
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
@@ -41,8 +45,11 @@ public class GameControl implements Runnable{
             lastTime = currentTime;
 
             if(delta >= 1){
+                drawStart = System.nanoTime();
                 update();
                 gameView.repaint();
+                drawEnd = System.nanoTime();
+                System.out.println("The draw time is: " + (drawEnd - drawStart));
                 delta--;
                 drawCount++;
 
@@ -57,5 +64,6 @@ public class GameControl implements Runnable{
     private void update(){
         leftHandControl.run();
         rightHandControl.run();
+        platformNailsControl.run();
     }
 }

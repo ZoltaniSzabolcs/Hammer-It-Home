@@ -10,7 +10,7 @@ public class RightHandModel {
     private int height;
     private BufferedImage hitImg[];
     private int currentImg;
-    private int timing[];
+    private long timing[];
     public RightHandModel(int width, int height){
         this.width = width;
         this.height = height;
@@ -27,10 +27,10 @@ public class RightHandModel {
         }
 
         int frameTime = 16700000;
-        this.timing = new int[hitImg.length];
+        this.timing = new long[hitImg.length];
         timing[0] = frameTime;
-        timing[1] = frameTime * 9;
-        timing[2] = frameTime * 3;
+        timing[1] = frameTime * 6;
+        timing[2] = frameTime * 2;
         timing[3] = frameTime * 2;
         timing[4] = frameTime;
         timing[5] = frameTime;
@@ -60,7 +60,7 @@ public class RightHandModel {
         this.currentImg = currentImg;
     }
 
-    public int[] getTiming() {
+    public long[] getTiming() {
         return timing;
     }
 }

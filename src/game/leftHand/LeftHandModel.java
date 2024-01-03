@@ -10,7 +10,7 @@ public class LeftHandModel {
     private int height;
     private BufferedImage hitImg[];
     private int currentImg;
-    private int timing[];
+    private long timing[];
 
     public LeftHandModel(int width, int height) {
         this.width = width;
@@ -26,12 +26,12 @@ public class LeftHandModel {
             e.printStackTrace();
         }
         int frameTime = 16700000;
-        this.timing = new int[hitImg.length];
-        timing[0] = frameTime * 3;
-        timing[1] = frameTime * 7;
-        timing[2] = frameTime * 3;
-        timing[3] = frameTime * 3;
-        timing[4] = frameTime * 2;
+        this.timing = new long[hitImg.length];
+        timing[0] = frameTime * 1;
+        timing[1] = frameTime * 3;
+        timing[2] = frameTime * 2;
+        timing[3] = frameTime * 1;
+        timing[4] = frameTime * 1;
         currentImg = hitImg.length;
     }
 
@@ -59,7 +59,7 @@ public class LeftHandModel {
         this.currentImg = currentImg;
     }
 
-    public int[] getTiming() {
+    public long[] getTiming() {
         return timing;
     }
 }

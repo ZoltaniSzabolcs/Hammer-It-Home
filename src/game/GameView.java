@@ -2,6 +2,8 @@ package game;
 
 import game.leftHand.LeftHandModel;
 import game.leftHand.LeftHandView;
+import game.platformNails.PlatformNailsModel;
+import game.platformNails.PlatformNailsView;
 import game.rightHand.RightHandModel;
 import game.rightHand.RightHandView;
 
@@ -14,13 +16,17 @@ public class GameView extends JPanel {
     private LeftHandModel leftHandModel;
     private RightHandView rightHandView;
     private RightHandModel rightHandModel;
+    private PlatformNailsView platformNailsView;
+    private PlatformNailsModel platformNailsModel;
 
-    public GameView(GameModel gameModel, LeftHandView leftHandView, LeftHandModel leftHandModel, RightHandView rightHandView, RightHandModel rightHandModel) {
+    public GameView(GameModel gameModel, LeftHandView leftHandView, LeftHandModel leftHandModel, RightHandView rightHandView, RightHandModel rightHandModel, PlatformNailsView platformNailsView, PlatformNailsModel platformNailsModel) {
         this.gameModel = gameModel;
         this.leftHandView = leftHandView;
         this.leftHandModel = leftHandModel;
         this.rightHandView = rightHandView;
         this.rightHandModel = rightHandModel;
+        this.platformNailsView = platformNailsView;
+        this.platformNailsModel = platformNailsModel;
         this.setBackground(new Color(219, 221, 198));
         this.setDoubleBuffered(true);
     }
@@ -29,6 +35,7 @@ public class GameView extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         leftHandView.draw(g);
+        platformNailsView.draw(g);
         rightHandView.draw(g);
     }
 }

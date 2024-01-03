@@ -5,10 +5,12 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
     private boolean leftHand, rightHand;
-
+    private boolean leftHavePlatform, rightHavePlatform;
     public KeyHandler() {
         leftHand = false;
         rightHand = false;
+        leftHavePlatform = false;
+        rightHavePlatform = true;
     }
 
     @Override
@@ -40,10 +42,18 @@ public class KeyHandler implements KeyListener {
     }
 
     public boolean isLeftHand() {
-        return leftHand;
+        return leftHand && leftHavePlatform;
     }
 
     public boolean isRightHand() {
-        return rightHand;
+        return rightHand && rightHavePlatform;
+    }
+
+    public boolean isLeftHavePlatform() {
+        return leftHavePlatform;
+    }
+
+    public void setLeftHavePlatform(boolean leftHavePlatform) {
+        this.leftHavePlatform = leftHavePlatform;
     }
 }
