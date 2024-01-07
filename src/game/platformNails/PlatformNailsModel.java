@@ -33,7 +33,10 @@ public class PlatformNailsModel {
         }catch (IOException e){
             e.printStackTrace();
         }
+
+        // The initial point where new nails should be placed
         this.init = new Point(init.x, init.y - nailImg[0].getHeight() / 2);
+
         nails = new ArrayList<>();
         platformPosition = new Point(-1 * platformImg.getWidth() / 2, init.y);
     }
@@ -96,4 +99,5 @@ public class PlatformNailsModel {
     public int getScreenWidth() {
         return screenWidth;
     }
+
 }

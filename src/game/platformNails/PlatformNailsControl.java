@@ -13,6 +13,8 @@ public class PlatformNailsControl {
     private PlatformNailsModel platformNailsModel;
     private PlatformNailsView platformNailsView;
     private KeyHandler keyHandler;
+    private int leftHandScore;
+    private int rightHandScore;
     private int screenWidth;
 
     public PlatformNailsControl(LeftHandControl leftHandControl, RightHandControl rightHandControl, PlatformNailsModel platformNailsModel, PlatformNailsView platformNailsView, int screenWidth, KeyHandler keyHandler) {
@@ -23,11 +25,14 @@ public class PlatformNailsControl {
         this.screenWidth = screenWidth;
         this.keyHandler = keyHandler;
         platformNailsModel.setPlatformPosition(new Point(-1 * platformNailsModel.getPlatformImg().getWidth() / 2, platformNailsModel.getPlatformPosition().y));
+        leftHandScore = 0;
+        rightHandScore = 0;
     }
     public void putNail(){
         platformNailsModel.addNail();
     }
     private boolean leftHandHavePlatform(){
+        // Left hand can put down nail?
         if(platformNailsModel.getPlatformPosition().x + platformNailsModel.getPlatformImg().getWidth() / 2  > platformNailsModel.getScreenWidth() &&
                 platformNailsModel.getPlatformPosition().x - platformNailsModel.getScreenWidth() < platformNailsModel.getInit().x &&
                 platformNailsModel.getPlatformPosition().x - platformNailsModel.getScreenWidth() + platformNailsModel.getPlatformImg().getWidth() / 2  - platformNailsModel.getNailImg()[0].getWidth() / 4> platformNailsModel.getInit().x){
@@ -36,6 +41,7 @@ public class PlatformNailsControl {
         return (platformNailsModel.getPlatformPosition().x < platformNailsModel.getInit().x &&
                 platformNailsModel.getPlatformPosition().x + platformNailsModel.getPlatformImg().getWidth() / 2 - platformNailsModel.getNailImg()[0].getWidth() / 4 > platformNailsModel.getInit().x);
     }
+
     public void run() {
         if(leftHandHavePlatform()){
             keyHandler.setLeftHavePlatform(true);
@@ -72,14 +78,25 @@ public class PlatformNailsControl {
                 nail.setCurrentImg(2);
                 nail.setPosition(new Point(nail.getPosition().x, platformNailsModel.getInit().y + platformNailsModel.getNailImg()[0].getHeight() / 2 - platformNailsModel.getNailImg()[2].getHeight() / 2+38));
             }
-            if(nail.getPosition().x > screenWidth && nail.getCurrentImg() == 0){
-                //platformNailsModel.removeNail(nail);
+            if(nail.getPosition().x > screenWidth){
+                if(nail.getCurrentImg() == 2){
+                    leftHandScore++;
+                }
+                if(nail.getCurrentImg() == 1){
+                    rightHandScore++;
+                }
                 removeNail.add(nail);
             }
         }
-        for (Nail nail :
-                removeNail) {
-            platformNailsModel.removeNail(nail);
-        }
+
+        // removes those nailes who left the screen
+        removeNail.forEach(nail -> platformNailsModel.removeNail(nail));
+    }
+    public int getLeftHandScore() {
+        return leftHandScore;
+    }
+
+    public int getRightHandScore() {
+        return rightHandScore;
     }
 }

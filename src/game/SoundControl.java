@@ -11,11 +11,11 @@ public class SoundControl {
     private AudioInputStream audioInputStream[];
     public SoundControl(){
         random = new Random();
-        System.out.println("Hello");
+//        System.out.println("Hello");
         try {
             this.audioInputStream  = new AudioInputStream[25];
             for (int i = 1; i <= 25; i++) {
-                System.out.println(i);
+//                System.out.println(i);
                 audioInputStream[i - 1] = AudioSystem.getAudioInputStream(new File("res/sound/hitSound (" + i +").wav"));
             }
         } catch (UnsupportedAudioFileException | IOException e) {

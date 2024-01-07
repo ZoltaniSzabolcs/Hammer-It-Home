@@ -18,8 +18,9 @@ public class GameView extends JPanel {
     private RightHandModel rightHandModel;
     private PlatformNailsView platformNailsView;
     private PlatformNailsModel platformNailsModel;
+    private GameFrame gameFrame;
 
-    public GameView(GameModel gameModel, LeftHandView leftHandView, LeftHandModel leftHandModel, RightHandView rightHandView, RightHandModel rightHandModel, PlatformNailsView platformNailsView, PlatformNailsModel platformNailsModel) {
+    public GameView(GameModel gameModel, LeftHandView leftHandView, LeftHandModel leftHandModel, RightHandView rightHandView, RightHandModel rightHandModel, PlatformNailsView platformNailsView, PlatformNailsModel platformNailsModel, GameFrame gameFrame) {
         this.gameModel = gameModel;
         this.leftHandView = leftHandView;
         this.leftHandModel = leftHandModel;
@@ -27,8 +28,19 @@ public class GameView extends JPanel {
         this.rightHandModel = rightHandModel;
         this.platformNailsView = platformNailsView;
         this.platformNailsModel = platformNailsModel;
+        this.gameFrame = gameFrame;
         this.setBackground(new Color(219, 221, 198));
         this.setDoubleBuffered(true);
+        setLayout(null);
+        JButton endButton = new JButton("END");
+        endButton.setBounds((platformNailsModel.getScreenWidth() - 150) / 2, 25, 150, 75);
+        endButton.setBackground(new Color(246, 255, 212));
+        endButton.setForeground(Color.BLACK);
+        endButton.setBorder(BorderFactory.createLineBorder(new Color(169, 171, 158), 2));
+        endButton.setFont(new Font("Arial", Font.BOLD, 36));
+        endButton.setFocusable(false);
+        endButton.addActionListener(e -> gameFrame.saveAndExit());
+        add(endButton);
     }
 
     @Override

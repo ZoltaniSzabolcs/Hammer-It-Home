@@ -37,7 +37,7 @@ public class GameControl implements Runnable{
         long currentTime;
         long timer = 0;
         int drawCount = 0;
-        long drawtime, drawStart, drawEnd;
+//        long drawtime, drawStart, drawEnd;
         while(gameThread != null){
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
@@ -45,11 +45,11 @@ public class GameControl implements Runnable{
             lastTime = currentTime;
 
             if(delta >= 1){
-                drawStart = System.nanoTime();
+//                drawStart = System.nanoTime();
                 update();
                 gameView.repaint();
-                drawEnd = System.nanoTime();
-                System.out.println("The draw time is: " + (drawEnd - drawStart));
+//                drawEnd = System.nanoTime();
+//                System.out.println("The draw time is: " + (drawEnd - drawStart));
                 delta--;
                 drawCount++;
 

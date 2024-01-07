@@ -12,12 +12,22 @@ import game.rightHand.RightHandView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class GameFrame extends JFrame {
     private final int screenWidth = 1280;
     private final int screenHeight = 800;
     private KeyHandler keyHandler;
-    public GameFrame(){
+    private String playerName1;
+    private String playerName2;
+    private PlatformNailsControl platformNailsControl;
+    public GameFrame(String playerName1, String playerName2){
+        this.playerName1 = playerName1;
+        this.playerName2 = playerName2;
+        System.out.println("The game has begun with: " + playerName1 + " " + playerName2);
         this.setBounds(256, 256, screenWidth, screenHeight);
         this.setLocationRelativeTo(null);
         this.setBackground(new Color(219, 221,198));
@@ -45,10 +55,10 @@ public class GameFrame extends JFrame {
                 10,
                 screenWidth);
         PlatformNailsView platformNailsView = new PlatformNailsView(platformNailsModel);
-        PlatformNailsControl platformNailsControl = new PlatformNailsControl(leftHandControl, rightHandControl, platformNailsModel, platformNailsView, screenWidth, keyHandler);
+        platformNailsControl = new PlatformNailsControl(leftHandControl, rightHandControl, platformNailsModel, platformNailsView, screenWidth, keyHandler);
 
         GameModel gameModel = new GameModel(leftHandModel, rightHandModel);
-        GameView gameView = new GameView(gameModel, leftHandView, leftHandModel, rightHandView, rightHandModel, platformNailsView, platformNailsModel);
+        GameView gameView = new GameView(gameModel, leftHandView, leftHandModel, rightHandView, rightHandModel, platformNailsView, platformNailsModel, this);
         GameControl gameControl = new GameControl(gameModel, gameView, leftHandControl, rightHandControl,platformNailsControl, keyHandler);
 
         this.addKeyListener(keyHandler);
@@ -57,5 +67,21 @@ public class GameFrame extends JFrame {
 
         this.setVisible(true);
         gameControl.startGameThread();
+    }
+
+    public void saveAndExit(){
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter("res/highscores.txt", true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(playerName1 + " " + platformNailsControl.getLeftHandScore() + " " + playerName2 + " " + platformNailsControl.getRightHandScore());
+            bufferedWriter.newLine();
+            bufferedWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        setVisible(false);
+        System.exit(0);
     }
 }
