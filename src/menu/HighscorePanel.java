@@ -33,7 +33,7 @@ public class HighscorePanel extends JPanel {
                 }
 
                 return new Score(tokens[0], tokens[2], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[3]));
-            }).sorted(Comparator.comparing(Score::getLeftHandScore)).collect(Collectors.toList());
+            }).sorted(Comparator.comparing(Score::getLeftHandScore)).collect(Collectors.toList()).reversed();
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -43,34 +43,44 @@ public class HighscorePanel extends JPanel {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("res/highscores.txt"));
             rightScores = bufferedReader.lines().map(s -> {
                 String[] tokens = s.split(" ");
+                if(tokens.length < 4){
+                    return null;
+                }
                 return new Score(tokens[0], tokens[2], Integer.parseInt(tokens[1]), Integer.parseInt(tokens[3]));
-            }).sorted(Comparator.comparing(Score::getRightHandScore)).collect(Collectors.toList());
+            }).sorted(Comparator.comparing(Score::getRightHandScore)) .collect(Collectors.toList()).reversed();
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        JLabel leftHandLabel = new JLabel();
-        JLabel rightHandLabel = new JLabel();
+        JTextArea leftHandLabel = new JTextArea();
+        JTextArea rightHandLabel = new JTextArea();
 
         int dist = 10;
-        leftHandLabel.setBounds(175 + dist, 110, 200, 300);
-        leftHandLabel.setMinimumSize(new Dimension(200, 300));
+        leftHandLabel.setBounds(175 + dist, 240, 200, 300);
+//        leftHandLabel.setMinimumSize(new Dimension(200, 300));
         leftHandLabel.setFont(new Font("Stencil", Font.BOLD, 16));
         leftHandLabel.setBackground(new Color(219, 221,198));
         leftHandLabel.setForeground(Color.BLACK);
+        leftHandLabel.setOpaque(false);
+        leftHandLabel.setEditable(false);
 
-        rightHandLabel.setBounds(625 - dist - 200, 110, 200,300);
+        rightHandLabel.setBounds(615 - dist - 200, 240, 200,300);
         rightHandLabel.setFont(new Font("Stencil", Font.BOLD, 16));
         rightHandLabel.setBackground(new Color(219, 221,198));
         rightHandLabel.setForeground(Color.BLACK);
+        rightHandLabel.setOpaque(false);
+        rightHandLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        rightHandLabel.setEditable(false);
 
         for(int i = 0; i < 10 && i < leftScores.size(); i++){
-            System.out.println(leftHandLabel.getText());
-            leftHandLabel.setText(leftHandLabel.getText() + leftScores.get(i).getLeftHandName() + " " + leftScores.get(i).getLeftHandScore() + "\n");
+//            System.out.println(leftHandLabel.getText();
+//            leftHandLabel.setText("<html>" + leftHandLabel.getText() + leftScores.get(i).getLeftHandName() + " " + leftScores.get(i).getLeftHandScore() + "<br></html>");
+            leftHandLabel.append(leftScores.get(i).getLeftHandName() + " " + leftScores.get(i).getLeftHandScore() + "\n");
         }
         for(int i = 0; i < 10 && i < rightScores.size(); i++){
-            rightHandLabel.setText(rightHandLabel.getText() + rightScores.get(i).getRightHandName() + " " + rightScores.get(i).getRightHandScore() + "\n");
+//            rightHandLabel.setText(rightHandLabel.getText() + rightScores.get(i).getRightHandName() + " " + rightScores.get(i).getRightHandScore() + "\n");
+            rightHandLabel.append(rightScores.get(i).getRightHandName() + " " + rightScores.get(i).getRightHandScore() + "\n");
         }
 
         add(leftHandLabel);

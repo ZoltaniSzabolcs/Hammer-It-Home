@@ -28,8 +28,8 @@ public class LeftHandModel {
         int frameTime = 16700000;
         this.timing = new long[hitImg.length];
         timing[0] = frameTime * 1;
-        timing[1] = frameTime * 3;
-        timing[2] = frameTime * 2;
+        timing[1] = frameTime * 2;
+        timing[2] = frameTime * 1;
         timing[3] = frameTime * 1;
         timing[4] = frameTime * 1;
         currentImg = hitImg.length;
